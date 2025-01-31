@@ -1,7 +1,7 @@
-# 4D TTT
+# 4D TTT （Test Time Training for 4D Medical Image Interpolation）
 
 ## 📖 Overview
-This is the implementation for the Test Time Training for 4D Medical ImageInterpolation
+This is the implementation for the Test Time Training for 4D Medical Image Interpolation
 
 ## Code Fundation
 Our code is partially built on [UVI-Net](https://github.com/jungeun122333/UVI-Net)
@@ -9,34 +9,35 @@ Our code is partially built on [UVI-Net](https://github.com/jungeun122333/UVI-Ne
 ## Dataset
 We use the same data set that are shown in [UVI-Net](https://github.com/jungeun122333/UVI-Net), including [ACDC](https://humanheart-project.creatis.insa-lyon.fr/database/#collection/637218c173e9f0047faa00fb) and [4D Lung](https://www.cancerimagingarchive.net/collection/4d-lung/).
 After downloading all the datasets, you need to place them in the `dataset` folder (or create one).
-└── dataset
-    ├── ACDC
-    │   └── database
-    │       ├── training
-    │       │   ├── patient001
-    │       │   │   ├── patient001_4d.nii.gz
-    │       │   │   ├── patient001_frame01.nii.gz
-    │       │   │   ├── patient001_frame01_gt.nii.gz
-    │       │   │   ├── patient001_frame12.nii.gz
-    │       │   │   ├── patient001_frame12_gt.nii.gz
-    │       │   │   ├── MANDATORY_CITATION.md
-    │       │   │   └── Info.cfg
-    │       │   ├── patient002
-    │       │   │       :
-    │       │   └── patient100
-    │       ├── testing
-    │       │   ├── patient101
-    │       │   │       :
-    │       │   └── patient150
-    │       └── MANDATORY_CITATION.md
-    └── 4D-Lung
-        ├── 100_HM10395
-        │   ├── 09-15-1997-NA-p4-69351
-        │   │             :
-        │   └── 07-02-2003-NA-p4-14571
-        ├── 101_HM10395
-        │     :
-        └── 119_HM10395
+dataset/
+├── ACDC/
+│   └── database/
+│       ├── training/
+│       │   ├── patient001/
+│       │   │   ├── patient001_4d.nii.gz
+│       │   │   ├── patient001_frame01.nii.gz
+│       │   │   ├── patient001_frame01_gt.nii.gz
+│       │   │   ├── patient001_frame12.nii.gz
+│       │   │   ├── patient001_frame12_gt.nii.gz
+│       │   │   ├── MANDATORY_CITATION.md
+│       │   │   └── Info.cfg
+│       │   ├── patient002/
+│       │   │   └── ...
+│       │   └── patient100/
+│       ├── testing/
+│       │   ├── patient101/
+│       │   │   └── ...
+│       │   └── patient150/
+│       └── MANDATORY_CITATION.md
+└── 4D-Lung/
+    ├── 100_HM10395/
+    │   ├── 09-15-1997-NA-p4-69351/
+    │   ├── 07-02-2003-NA-p4-14571/
+    │   └── ...
+    ├── 101_HM10395/
+    │   └── ...
+    └── 119_HM10395/
+
 
 ## 🛠️ Requirements
 Use  `-pip install -r requirements.txt` to install all the required libraries.
@@ -68,9 +69,9 @@ For the Rotation Predictor:
 For the 3D MAE:
  You need to adjust the Patch embedding setting for the datasets for they don't share the same sizes.
 For Cardiac dataset:
-Go to models/mae3d/patch_embed.py, set code in line10 to img_size = (img_size, img_size, 8)  # cardiac
+Go to models/mae3d/patch_embed.py, set code in line10 to `img_size = (img_size, img_size, 8)`  # cardiac
  Then Run `python evaluation.py --dataset cardiac --ttt_mode naive/online/mini_batch ` for Cardiac dataset
 
 For Lung dataset:
-Go to models/mae3d/patch_embed.py, set code in line10 to img_size = (img_size, img_size, 32)  # lung
+Go to models/mae3d/patch_embed.py, set code in line10 to `img_size = (img_size, img_size, 32)`  # lung
  Then Run `python evaluation.py --dataset lung --ttt_mode naive/online/mini_batch` for 4D lung dataset
