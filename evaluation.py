@@ -455,7 +455,7 @@ def main(args):
 
             # 选择切片
             if args.dataset == "cardiac":
-                real_slice = real_volume[:, :, slice_idx]  # 短轴切片  # 冠状切片
+                real_slice = real_volume[slice_idx, :, :]  # 短轴切片  # 冠状切片
                 generated_slice = generated_volume[:, :, slice_idx]  # 冠状切片
             elif args.dataset == "lung":
                 real_slice = real_volume[:, slice_idx, :]  # 矢状切片
@@ -505,7 +505,6 @@ def main(args):
             psnr_log.update(psnr)
             nmse_log.update(nmse)
             ncc_log.update(ncc)
-            lpips_log.update(lpips)
             ssim_log.update(ssim)
 
     print(
@@ -514,7 +513,6 @@ def main(args):
             ncc_log.avg,
             ssim_log.avg,
             nmse_log.avg * 100,
-            lpips_log.avg * 100,
         )
     )
     print(
@@ -523,7 +521,6 @@ def main(args):
             ncc_log.stderr,
             ssim_log.stderr,
             nmse_log.stderr * 100,
-            lpips_log.stderr * 100,
         )
     )
 
