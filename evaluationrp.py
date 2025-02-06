@@ -10,7 +10,6 @@ import torch.backends.cudnn as cudnn
 import torch.nn.functional as F
 import torch.nn as nn
 from utils import datasets, utils
-from lpips import LPIPS
 from models.UNet.model import Unet3D, Unet3D_multi
 from models.VoxelMorph.model import VoxelMorph
 from natsort import natsorted
@@ -503,7 +502,6 @@ def main(args):
             psnr_log.update(psnr)
             nmse_log.update(nmse)
             ncc_log.update(ncc)
-            lpips_log.update(lpips)
             ssim_log.update(ssim)
 
     print(
@@ -512,7 +510,6 @@ def main(args):
             ncc_log.avg,
             ssim_log.avg,
             nmse_log.avg * 100,
-            lpips_log.avg * 100,
         )
     )
     print(
@@ -521,7 +518,6 @@ def main(args):
             ncc_log.stderr,
             ssim_log.stderr,
             nmse_log.stderr * 100,
-            lpips_log.stderr * 100,
         )
     )
 
