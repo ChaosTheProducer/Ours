@@ -49,32 +49,7 @@ def evaluate(original, generated):
     #### NMSE
     nmse = mse / torch.mean(original**2)
 
-    #### LPIPS
-    lpips = utils.AverageMeter()
-    new_original_image, new_generated_image = [], []
-    for i in range(generated.shape[2]):
-        new_original_image.append((original[0, 0, i, :, :] * 2 - 1).repeat(3, 1, 1))
-        new_generated_image.append((generated[0, 0, i, :, :] * 2 - 1).repeat(3, 1, 1))
-    for i in range(generated.shape[3]):
-        new_original_image.append((original[0, 0, :, i, :] * 2 - 1).repeat(3, 1, 1))
-        new_generated_image.append((generated[0, 0, :, i, :] * 2 - 1).repeat(3, 1, 1))
-    original_image = torch.stack(new_original_image, dim=0).cuda()
-    generated_image = torch.stack(new_generated_image, dim=0).cuda()
-    lpips_ = loss_fn_alex(original_image, generated_image)
-    for l in lpips_:
-        lpips.update(l.item())
-
-    new_original_image, new_generated_image = [], []
-    for i in range(generated.shape[4]):
-        new_original_image.append((original[0, 0, :, :, i] * 2 - 1).repeat(3, 1, 1))
-        new_generated_image.append((generated[0, 0, :, :, i] * 2 - 1).repeat(3, 1, 1))
-    original_image = torch.stack(new_original_image, dim=0).cuda()
-    generated_image = torch.stack(new_generated_image, dim=0).cuda()
-    lpips_ = loss_fn_alex(original_image, generated_image)
-    for l in lpips_:
-        lpips.update(l.item())
-
-    return psnr, -1 * ncc.item(), ssim.item(), nmse.item(), lpips.avg
+    return psnr, -1 * ncc.item(), ssim.item(), nmse.item()
 
 # New rotate function
 def rotate_xy_plane(tensor, degree):
